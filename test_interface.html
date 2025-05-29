@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Review API - Test Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .endpoint {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .method {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .get { background-color: #28a745; }
+        .post { background-color: #007bff; }        .put { background-color: #ffc107; color: #212529; }
+        .delete { background-color: #dc3545; }
+        .url {
+            font-family: monospace;
+            background: #e9ecef;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .method.client {
+            background-color: #6f42c1;
+            color: white;
+        }
+        .client-methods {
+            border-left: 4px solid #6f42c1;
+        }
+        .all-methods {
+            background-color: #e8f5e8 !important;
+        }
+            background: #e9ecef;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .success {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+        .error {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 5px 0;
+        }
+        .auth-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .token-display {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+            background: #e9ecef;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .description {
+            margin-top: 10px;
+            color: #6c757d;
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .response {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .status {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .success { color: #28a745; }
+        .error { color: #dc3545; }
+        .auth-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .token-display {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-group {
+            margin: 10px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>📚 Book Review API - Test Interface</h1>
+    
+    <div class="container">
+        <h2>Authentication</h2>
+        <div class="auth-section">
+            <h3>Register New User</h3>
+            <div class="form-group">
+                <label for="reg-username">Username:</label>
+                <input type="text" id="reg-username" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label for="reg-email">Email:</label>
+                <input type="email" id="reg-email" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="reg-password">Password:</label>
+                <input type="password" id="reg-password" placeholder="Enter password">
+            </div>
+            <button class="test-button" onclick="registerUser()">Register User</button>
+            <div id="register-response" class="response" style="display: none;"></div>
+        </div>
+        
+        <div class="auth-section">
+            <h3>Login User</h3>
+            <div class="form-group">
+                <label for="login-username">Username:</label>
+                <input type="text" id="login-username" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" placeholder="Enter password">
+            </div>
+            <button class="test-button" onclick="loginUser()">Login</button>
+            <div id="login-response" class="response" style="display: none;"></div>
+            
+            <div id="token-section" style="display: none; margin-top: 15px;">
+                <label>JWT Token:</label>
+                <div id="token-display" class="token-display"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Public Endpoints (No Authentication Required)</h2>
+          <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="url">/api/books</span>
+            <div class="description">Task 1: Get all books available in the shop</div>
+            <button class="test-button" onclick="testEndpoint('GET', '/books', null, 'books-response')">Test</button>
+            <div id="books-response" class="response" style="display: none;"></div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="url">/api/books/{isbn}</span>
+            <div class="description">Task 2: Get book by ISBN</div>
+            <input type="number" id="isbn-input" placeholder="Enter ISBN (1-10)" value="1" style="width: 100px; margin: 10px 0;">
+            <button class="test-button" onclick="testBookByISBN()">Test</button>
+            <div id="isbn-response" class="response" style="display: none;"></div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="url">/api/books/author/{author}</span>
+            <div class="description">Task 3: Get books by author</div>
+            <input type="text" id="author-input" placeholder="Enter author name" value="Jane Austen" style="margin: 10px 0;">
+            <button class="test-button" onclick="testBooksByAuthor()">Test</button>
+            <div id="author-response" class="response" style="display: none;"></div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="url">/api/books/title/{title}</span>
+            <div class="description">Task 4: Get books by title</div>
+            <input type="text" id="title-input" placeholder="Enter title" value="Pride" style="margin: 10px 0;">
+            <button class="test-button" onclick="testBooksByTitle()">Test</button>
+            <div id="title-response" class="response" style="display: none;"></div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="url">/api/books/{isbn}/reviews</span>
+            <div class="description">Task 5: Get book reviews</div>
+            <input type="number" id="reviews-isbn-input" placeholder="Enter ISBN (1-10)" value="1" style="width: 100px; margin: 10px 0;">
+            <button class="test-button" onclick="testBookReviews()">Test</button>
+            <div id="reviews-response" class="response" style="display: none;"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Protected Endpoints (Authentication Required)</h2>
+        
+        <div class="endpoint">
+            <span class="method put">PUT</span>
+            <span class="url">/api/books/{isbn}/reviews</span>
+            <div class="description">Task 8: Add/Modify book review</div>
+            <div class="form-group">
+                <input type="number" id="review-isbn-input" placeholder="Enter ISBN (1-10)" value="1" style="width: 100px;">
+            </div>
+            <div class="form-group">
+                <textarea id="review-text" placeholder="Enter your review" rows="3">This is an excellent book! Highly recommended for anyone interested in literature.</textarea>
+            </div>
+            <button class="test-button" onclick="addReview()">Add Review</button>
+            <div id="add-review-response" class="response" style="display: none;"></div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method delete">DELETE</span>
+            <span class="url">/api/books/{isbn}/reviews</span>
+            <div class="description">Task 9: Delete book review</div>
+            <input type="number" id="delete-isbn-input" placeholder="Enter ISBN (1-10)" value="1" style="width: 100px; margin: 10px 0;">
+            <button class="test-button" onclick="deleteReview()">Delete Review</button>
+            <div id="delete-review-response" class="response" style="display: none;"></div>
+        </div>
+    </div>    <div class="container">
+        <h2>Client Methods (Tasks 10-13)</h2>
+        <p><strong>Interactive Testing:</strong> Test the Node.js client methods directly in the browser using browser-compatible implementations.</p>
+          <div class="endpoint client-methods">
+            <span class="method client">CLIENT</span>
+            <span class="url">getAllBooksAsync()</span>
+            <div class="description">Task 10: Get all books using async callback function</div>
+            <button class="test-button" onclick="testGetAllBooksAsync()">Test Async Callback</button>
+            <div id="async-books-response" class="response" style="display: none;"></div>
+        </div>
+
+        <div class="endpoint client-methods">
+            <span class="method client">CLIENT</span>
+            <span class="url">searchByISBN()</span>
+            <div class="description">Task 11: Search by ISBN using Promises</div>
+            <input type="number" id="client-isbn-input" placeholder="Enter ISBN (1-10)" value="1" style="width: 100px; margin: 10px 0;">
+            <button class="test-button" onclick="testSearchByISBN()">Test Promise-based ISBN Search</button>
+            <div id="promise-isbn-response" class="response" style="display: none;"></div>
+        </div>
+
+        <div class="endpoint client-methods">
+            <span class="method client">CLIENT</span>
+            <span class="url">searchByAuthor()</span>
+            <div class="description">Task 12: Search by Author using Promises</div>
+            <input type="text" id="client-author-input" placeholder="Enter author name" value="Jane Austen" style="margin: 10px 0;">
+            <button class="test-button" onclick="testSearchByAuthor()">Test Promise-based Author Search</button>
+            <div id="promise-author-response" class="response" style="display: none;"></div>
+        </div>
+
+        <div class="endpoint client-methods">
+            <span class="method client">CLIENT</span>
+            <span class="url">searchByTitle()</span>
+            <div class="description">Task 13: Search by Title using Promises</div>
+            <input type="text" id="client-title-input" placeholder="Enter title" value="Pride" style="margin: 10px 0;">
+            <button class="test-button" onclick="testSearchByTitle()">Test Promise-based Title Search</button>
+            <div id="promise-title-response" class="response" style="display: none;"></div>
+        </div>
+
+        <div class="endpoint all-methods">
+            <span class="method client">ALL</span>
+            <span class="url">Test All Client Methods</span>
+            <div class="description">Run all client methods (Tasks 10-13) sequentially</div>
+            <button class="test-button" onclick="testAllClientMethods()">Test All Client Methods</button>
+            <div id="all-client-response" class="response" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        const BASE_URL = 'http://localhost:3001/api';
+        let authToken = '';        async function testEndpoint(method, url, data, responseId) {
+            console.log('Making request to:', BASE_URL + url);
+            try {
+                const options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...(authToken && { 'Authorization': `Bearer ${authToken}` })
+                    }
+                };
+
+                if (data) {
+                    options.body = JSON.stringify(data);
+                }
+
+                const fullUrl = BASE_URL + url;
+                console.log('Full URL:', fullUrl);
+                console.log('Options:', options);
+                
+                const response = await fetch(fullUrl, options);
+                const result = await response.json();
+                
+                console.log('Response status:', response.status);
+                console.log('Response data:', result);
+                
+                const responseDiv = document.getElementById(responseId);
+                responseDiv.style.display = 'block';
+                responseDiv.innerHTML = `<div class="status ${response.ok ? 'success' : 'error'}">Status: ${response.status} ${response.statusText}</div>${JSON.stringify(result, null, 2)}`;
+            } catch (error) {
+                console.error('Request error:', error);
+                const responseDiv = document.getElementById(responseId);
+                responseDiv.style.display = 'block';
+                responseDiv.innerHTML = `<div class="status error">Error: ${error.message}</div>`;
+            }
+        }
+
+        async function registerUser() {
+            const username = document.getElementById('reg-username').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+
+            if (!username || !email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            await testEndpoint('POST', '/register', { username, email, password }, 'register-response');
+        }
+
+        async function loginUser() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            if (!username || !password) {
+                alert('Please fill in username and password');
+                return;
+            }
+
+            try {
+                const response = await fetch(BASE_URL + '/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const result = await response.json();
+                
+                const responseDiv = document.getElementById('login-response');
+                responseDiv.style.display = 'block';
+                responseDiv.innerHTML = `<div class="status ${response.ok ? 'success' : 'error'}">Status: ${response.status} ${response.statusText}</div>${JSON.stringify(result, null, 2)}`;
+
+                if (response.ok && result.token) {
+                    authToken = result.token;
+                    document.getElementById('token-section').style.display = 'block';
+                    document.getElementById('token-display').textContent = authToken;
+                }
+            } catch (error) {
+                const responseDiv = document.getElementById('login-response');
+                responseDiv.style.display = 'block';
+                responseDiv.innerHTML = `<div class="status error">Error: ${error.message}</div>`;
+            }
+        }
+
+        function testBookByISBN() {
+            const isbn = document.getElementById('isbn-input').value;
+            testEndpoint('GET', `/books/${isbn}`, null, 'isbn-response');
+        }
+
+        function testBooksByAuthor() {
+            const author = document.getElementById('author-input').value;
+            testEndpoint('GET', `/books/author/${encodeURIComponent(author)}`, null, 'author-response');
+        }
+
+        function testBooksByTitle() {
+            const title = document.getElementById('title-input').value;
+            testEndpoint('GET', `/books/title/${encodeURIComponent(title)}`, null, 'title-response');
+        }
+
+        function testBookReviews() {
+            const isbn = document.getElementById('reviews-isbn-input').value;
+            testEndpoint('GET', `/books/${isbn}/reviews`, null, 'reviews-response');
+        }
+
+        function addReview() {
+            if (!authToken) {
+                alert('Please login first to add a review');
+                return;
+            }
+            const isbn = document.getElementById('review-isbn-input').value;
+            const review = document.getElementById('review-text').value;
+            testEndpoint('PUT', `/books/${isbn}/reviews`, { review }, 'add-review-response');
+        }        function deleteReview() {
+            if (!authToken) {
+                alert('Please login first to delete a review');
+                return;
+            }
+            const isbn = document.getElementById('delete-isbn-input').value;
+            testEndpoint('DELETE', `/books/${isbn}/reviews`, null, 'delete-review-response');
+        }
+
+        // Client Methods (Tasks 10-13) - Browser implementations
+
+        // Task 10: Get all books using async callback function
+        async function getAllBooksAsync(callback) {
+            try {
+                const response = await fetch(`${BASE_URL}/books`);
+                const data = await response.json();
+                callback(null, data);
+            } catch (error) {
+                callback(error, null);
+            }
+        }
+
+        function testGetAllBooksAsync() {
+            const responseDiv = document.getElementById('async-books-response');
+            responseDiv.style.display = 'block';
+            responseDiv.innerHTML = '<div class="status">Testing async callback...</div>';
+            
+            getAllBooksAsync((error, books) => {
+                if (error) {
+                    responseDiv.innerHTML = `<div class="status error">Error: ${error.message}</div>`;
+                } else {
+                    const bookCount = Object.keys(books).length;
+                    const result = {
+                        method: 'Async Callback Function',
+                        success: true,
+                        bookCount: bookCount,
+                        firstBook: books[1] || books[Object.keys(books)[0]],
+                        allBooks: books
+                    };
+                    responseDiv.innerHTML = `<div class="status success">Success: Retrieved ${bookCount} books using async callback</div>${JSON.stringify(result, null, 2)}`;
+                }
+            });
+        }
+
+        // Task 11: Search by ISBN using Promises
+        function searchByISBN(isbn) {
+            return new Promise((resolve, reject) => {
+                fetch(`${BASE_URL}/books/${isbn}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => resolve(data))
+                    .catch(error => reject(error));
+            });
+        }
+
+        async function testSearchByISBN() {
+            const isbn = document.getElementById('client-isbn-input').value;
+            const responseDiv = document.getElementById('promise-isbn-response');
+            responseDiv.style.display = 'block';
+            responseDiv.innerHTML = '<div class="status">Testing Promise-based ISBN search...</div>';
+            
+            try {
+                const book = await searchByISBN(isbn);
+                const result = {
+                    method: 'Promise-based ISBN Search',
+                    isbn: isbn,
+                    success: true,
+                    book: book
+                };
+                responseDiv.innerHTML = `<div class="status success">Success: Found book by ISBN ${isbn}</div>${JSON.stringify(result, null, 2)}`;
+            } catch (error) {
+                responseDiv.innerHTML = `<div class="status error">Error: ${error.message}</div>`;
+            }
+        }
+
+        // Task 12: Search by Author using Promises
+        function searchByAuthor(author) {
+            return new Promise((resolve, reject) => {
+                fetch(`${BASE_URL}/books/author/${encodeURIComponent(author)}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => resolve(data))
+                    .catch(error => reject(error));
+            });
+        }
+
+        async function testSearchByAuthor() {
+            const author = document.getElementById('client-author-input').value;
+            const responseDiv = document.getElementById('promise-author-response');
+            responseDiv.style.display = 'block';
+            responseDiv.innerHTML = '<div class="status">Testing Promise-based Author search...</div>';
+            
+            try {
+                const books = await searchByAuthor(author);
+                const result = {
+                    method: 'Promise-based Author Search',
+                    author: author,
+                    success: true,
+                    books: books
+                };
+                responseDiv.innerHTML = `<div class="status success">Success: Found books by ${author}</div>${JSON.stringify(result, null, 2)}`;
+            } catch (error) {
+                responseDiv.innerHTML = `<div class="status error">Error: ${error.message}</div>`;
+            }
+        }
+
+        // Task 13: Search by Title using Promises
+        function searchByTitle(title) {
+            return new Promise((resolve, reject) => {
+                fetch(`${BASE_URL}/books/title/${encodeURIComponent(title)}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => resolve(data))
+                    .catch(error => reject(error));
+            });
+        }
+
+        async function testSearchByTitle() {
+            const title = document.getElementById('client-title-input').value;
+            const responseDiv = document.getElementById('promise-title-response');
+            responseDiv.style.display = 'block';
+            responseDiv.innerHTML = '<div class="status">Testing Promise-based Title search...</div>';
+            
+            try {
+                const books = await searchByTitle(title);
+                const result = {
+                    method: 'Promise-based Title Search',
+                    title: title,
+                    success: true,
+                    books: books
+                };
+                responseDiv.innerHTML = `<div class="status success">Success: Found books with title containing "${title}"</div>${JSON.stringify(result, null, 2)}`;
+            } catch (error) {
+                responseDiv.innerHTML = `<div class="status error">Error: ${error.message}</div>`;
+            }
+        }
+
+        // Test All Client Methods
+        async function testAllClientMethods() {
+            const responseDiv = document.getElementById('all-client-response');
+            responseDiv.style.display = 'block';
+            responseDiv.innerHTML = '<div class="status">Running all client methods sequentially...</div>';
+            
+            let results = [];
+            
+            // Test 1: Async callback
+            await new Promise((resolve) => {
+                getAllBooksAsync((error, books) => {
+                    if (error) {
+                        results.push({ task: 'Task 10 - Async Callback', success: false, error: error.message });
+                    } else {
+                        results.push({ 
+                            task: 'Task 10 - Async Callback', 
+                            success: true, 
+                            bookCount: Object.keys(books).length,
+                            sample: books[1] || books[Object.keys(books)[0]]
+                        });
+                    }
+                    resolve();
+                });
+            });
+            
+            // Test 2: Promise ISBN
+            try {
+                const book = await searchByISBN(1);
+                results.push({ task: 'Task 11 - Promise ISBN', success: true, book: book });
+            } catch (error) {
+                results.push({ task: 'Task 11 - Promise ISBN', success: false, error: error.message });
+            }
+            
+            // Test 3: Promise Author
+            try {
+                const books = await searchByAuthor('Jane Austen');
+                results.push({ task: 'Task 12 - Promise Author', success: true, books: books });
+            } catch (error) {
+                results.push({ task: 'Task 12 - Promise Author', success: false, error: error.message });
+            }
+            
+            // Test 4: Promise Title
+            try {
+                const books = await searchByTitle('Pride');
+                results.push({ task: 'Task 13 - Promise Title', success: true, books: books });
+            } catch (error) {
+                results.push({ task: 'Task 13 - Promise Title', success: false, error: error.message });
+            }
+            
+            const allSuccess = results.every(r => r.success);
+            responseDiv.innerHTML = `<div class="status ${allSuccess ? 'success' : 'error'}">All Client Methods Completed (${results.filter(r => r.success).length}/${results.length} successful)</div>${JSON.stringify(results, null, 2)}`;
+        }
+    </script>
+</body>
+</html>
